@@ -1,6 +1,7 @@
 package com.xinxing.spring.framework.beans.factory.support;
 
 import com.xinxing.spring.framework.beans.factory.config.XBeanDefinition;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,13 +10,13 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-
+@Slf4j
 public class XBeanDefinitionReader {
 
     private static final String SCAN_PACKAGE = "scanPackage";
     private static final String CLASS_SUFFIX = ".class";
 
-    private List<String> scanPackageBeanClassNames = new ArrayList<String>();
+    private List<String> scanPackageBeanClassNames = new ArrayList<>();
 
     private Properties config = new Properties();
 
@@ -58,7 +59,7 @@ public class XBeanDefinitionReader {
             try {
                 Class<?> clazz = Class.forName(beanClassName);
                 if (clazz.isInterface()) {
-                    throw new RuntimeException("暂不支持接口bean，class name >>>> " + beanClassName);
+                    log.debug("beanDefinition 暂不处理接口 >>>> " + beanClassName);
                 }
                 XBeanDefinition xBeanDefinition = new XBeanDefinition();
                 xBeanDefinition.setBeanClassName(beanClassName);
